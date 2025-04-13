@@ -1,11 +1,10 @@
-import express from 'express'
-import { PrismaClient } from '@prisma/client'
-import serverless from 'serverless-http'
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
-const app = express()
+const prisma = new PrismaClient();
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 app.post('/produtos', async (req, res) => {
     try {
@@ -81,5 +80,8 @@ app.delete('/produtos/:id', async (req, res) => {
     }
 });
 
-// Exporta para Vercel
-export const handler = serverless(app);
+// Porta dinâmica
+const port = process.env.PORT || 3000;  // Usa a porta fornecida pelo ambiente
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
